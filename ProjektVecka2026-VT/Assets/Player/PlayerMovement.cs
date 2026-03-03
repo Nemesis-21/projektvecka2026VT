@@ -2,52 +2,61 @@
 
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInput))]
 
 public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
-{ 
+{
+    [Header("Variables")]
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityScale;
-    public Vector2 movedirection;
+    [SerializeField] float GroundedDistance;
+    [SerializeField] LayerMask ground;
 
-    private Rigidbody rb;
+    [Header("Animator on child/ charchter")]
     [SerializeField] Animator animator;
-    private PlayerInput pInput;
-
-    public Camera mainCam;
-    public Vector2 mousePos;
-    public LayerMask ground;
-    public int comboCounter = 0;
+    [Header("Combo counter TMP on HUD")]
     [SerializeField] GameObject streakCheck;
-    public Animator animatorStreak;
-    public TextMeshProUGUI textStreak;
+    [Header("Regulare ol´ cam")]
+    [SerializeField] Camera mainCam;
 
-    private bool walking;
-    private bool onGround;
+    [Header("Debug / Read Only")]
+    public Vector2 movedirection;
+    public Vector2 mousePos;
+    public int comboCounter = 0;
+    public bool walking=false;
+    
+
+
+    //other compomponents that u get with Awake()
+    private Animator animatorStreak;
+    private TextMeshProUGUI textStreak;
+    private PlayerInput pInput;
+    private Rigidbody rb;
+
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         pInput = GetComponent<PlayerInput>();
-
         animatorStreak = streakCheck.GetComponent<Animator>();
         textStreak = streakCheck.GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Locomotion
         lookAround();
         rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
+        
+        
+        
+        
+        //HUD
         textStreak.text = "X" + comboCounter;
-
-
-
-
+        //Animator
         animator.SetBool("Walk", walking);
     }
 
@@ -58,6 +67,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
     }
     public void lookAround()
     {
+        
         Ray ray = mainCam.ScreenPointToRay(mousePos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, ground))
@@ -92,8 +102,13 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        
+        
         if (animatorStreak && context.performed) 
         {
+            animator.SetTrigger("Attack");
+
+
             comboCounter++;
             animatorStreak.SetTrigger("Combo");
         }
@@ -101,7 +116,10 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
+        if (IsGrounded())
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
+        }
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -111,5 +129,17 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
             mousePos = context.ReadValue<Vector2>();
         }
         
+    }
+
+    bool IsGrounded()
+    {
+        if (rb.linearVelocity.y == 0)
+        {
+            return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GroundedDistance);
+        }
+        else
+        {
+            return false;
+        }
     }
 }
