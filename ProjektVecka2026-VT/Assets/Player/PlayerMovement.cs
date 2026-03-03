@@ -28,7 +28,10 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
     // Update is called once per frame
     void Update()
     {
-        rb.AddForce(new Vector3(movedirection.x* moveSpeed*Time.deltaTime, 0, movedirection.y*moveSpeed * Time.deltaTime));
+        //rb.AddForce(new Vector3(movedirection.x* moveSpeed, 0, movedirection.y*moveSpeed));
+        rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
+
+        
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -45,6 +48,6 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 6, rb.linearVelocity.z);
     }
 }
