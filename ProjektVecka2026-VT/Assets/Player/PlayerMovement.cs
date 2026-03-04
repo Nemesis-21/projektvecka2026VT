@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemylayer;
-    [Header("Animator on child/ charchter")]
-    [SerializeField] Animator animator;
+
+    
     [Header("Combo counter TMP on HUD")]
     [SerializeField] GameObject streakCheck;
     [Header("Regulare ol´ cam")]
@@ -40,11 +40,13 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     private TextMeshProUGUI textStreak;
     private PlayerInput pInput;
     private Rigidbody rb;
+    private Animator animator;
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         pInput = GetComponent<PlayerInput>();
         animatorStreak = streakCheck.GetComponent<Animator>();
         textStreak = streakCheck.GetComponent<TextMeshProUGUI>();
