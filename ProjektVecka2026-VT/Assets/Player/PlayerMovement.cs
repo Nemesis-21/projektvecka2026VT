@@ -1,20 +1,25 @@
 //Edgar Åberg, 2026-03-02
 
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInput))]
 
-public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
+public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions, IDamageable
 {
-    [Header("Variables")]
+    [Header("Movement Variables")]
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityScale;
     [SerializeField] float GroundedDistance;
     [SerializeField] LayerMask ground;
 
+    [Header("Attack Variables")]
+    [SerializeField] Transform attackPoint;
+    [SerializeField] float attackRadius;
+    [SerializeField] LayerMask enemylayer;
     [Header("Animator on child/ charchter")]
     [SerializeField] Animator animator;
     [Header("Combo counter TMP on HUD")]
@@ -58,6 +63,9 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
         textStreak.text = "X" + comboCounter;
         //Animator
         animator.SetBool("Walk", walking);
+        animator.SetBool("OnGround", IsGrounded());
+
+
     }
 
     private void FixedUpdate()
@@ -109,8 +117,18 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions
             animator.SetTrigger("Attack");
 
 
-            comboCounter++;
-            animatorStreak.SetTrigger("Combo");
+            Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
+            foreach (Collider enemyCollider in HitEnemys)
+            {
+                IDamageable obj = enemyCollider.GetComponent<IDamageable>();
+                if (obj!=null)
+                {
+                    obj.TakeDamage(10);
+                    comboCounter++;
+                    animatorStreak.SetTrigger("Combo");
+                }
+            }
+
         }
     }
 
