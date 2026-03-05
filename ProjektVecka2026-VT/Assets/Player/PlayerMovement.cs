@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         //Locomotion
         lookAround();
 
-        if (movementWait == 0)
+        if (Actionable())
         {
             rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
         }
@@ -139,26 +139,20 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     {
         
         
-        if (animatorStreak && context.performed) 
+        if (context.performed && Actionable()) 
         {
-           
-            
-                animator.SetTrigger("Attack");
+            rb.linearVelocity = Vector3.zero;
+            animator.SetTrigger("Attack");
+
+
 
             if (!IsGrounded())
             {
-                movementWait = 3;
                 rb.linearVelocity = new Vector3(0, 20, 0);
-
-
             }
-            else
-            {
 
 
 
-
-            }
 
             
             Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
@@ -169,7 +163,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
                 {
                     obj.TakeDamage(10);
                     comboCounter++;
-                    animatorStreak.SetTrigger("Combo");
+                    if (animatorStreak) animatorStreak.SetTrigger("Combo");
                 }
             }
 
@@ -178,7 +172,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
+        if (IsGrounded() && Actionable())
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
         }
@@ -197,9 +191,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     {
         if (context.performed)
         {
-            movementWait = 2;
-            animator.SetTrigger("Dodge");
-            rb.linearVelocity = new Vector3(movedirection.x * 8, 2, movedirection.y * 8);
+            
         }
 
     }
@@ -208,6 +200,10 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
             return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GroundedDistance);        
     }
 
+    bool Actionable()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle");
+    }
     public void Camera()
     {
         if (transform.position.y > 4f)
