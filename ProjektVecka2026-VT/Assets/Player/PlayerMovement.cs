@@ -64,11 +64,12 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     void Update()
     {
-        //Locomotion
-        lookAround();
+
 
         if (Actionable())
         {
+            //Locomotion
+            lookAround();
             rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
         }
 
@@ -139,31 +140,38 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     {
         
         
-        if (context.performed && Actionable()) 
+        if (context.performed) 
         {
-            rb.linearVelocity = Vector3.zero;
-            animator.SetTrigger("Attack");
-
-
-
-            if (!IsGrounded())
+            if (CanAttack() || Actionable())
             {
-                rb.linearVelocity = new Vector3(0, 20, 0);
-            }
+                animator.SetTrigger("Attack");
+                lookAround();
+                rb.linearVelocity = Vector3.zero;
 
 
-
-
-            
-            Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
-            foreach (Collider enemyCollider in HitEnemys)
-            {
-                IDamageable obj = enemyCollider.GetComponent<IDamageable>();
-                if (obj!=null)
+                if (!IsGrounded())
                 {
-                    obj.TakeDamage(10);
-                    comboCounter++;
-                    if (animatorStreak) animatorStreak.SetTrigger("Combo");
+                    rb.linearVelocity = new Vector3(0, 20, 0);
+                }
+                else
+                {
+                    rb.AddForce(transform.forward * 2, ForceMode.Impulse);
+                }
+
+
+
+
+
+                Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
+                foreach (Collider enemyCollider in HitEnemys)
+                {
+                    IDamageable obj = enemyCollider.GetComponent<IDamageable>();
+                    if (obj != null)
+                    {
+                        obj.TakeDamage(10);
+                        comboCounter++;
+                        if (animatorStreak) animatorStreak.SetTrigger("Combo");
+                    }
                 }
             }
 
@@ -203,6 +211,11 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     bool Actionable()
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle");
+    }
+
+    bool CanAttack()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsTag("CanAttack");
     }
     public void Camera()
     {
