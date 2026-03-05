@@ -1,5 +1,6 @@
 //Edgar Åberg, 2026-03-02
-
+//While this is not the most impressive thing, I designed the whole player including animations and such.
+//I would prefare too add a better way to sync animations with the players action but it think that my "cheat" solutions work good, but would not scale well for a bigger game.
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -13,8 +14,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityScale;
-    [SerializeField] float GroundedDistance;
-    [SerializeField] LayerMask ground;
+    [SerializeField] float GroundedDistance;//0.1f is a good value
+    [SerializeField] LayerMask ground;//Plane layer that the mouse compares its self too. 
     [SerializeField] float maxhp;
     
 
@@ -22,8 +23,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask enemylayer;
+    [SerializeField] ParticleSystem hitSpark;
 
-    
     [Header("Combo counter TMP on HUD")]
     [SerializeField] GameObject streakCheck;
     [Header("Regulare ol´ cam")]
@@ -54,6 +55,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     void Awake()
     {
+        
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         pInput = GetComponent<PlayerInput>();
@@ -73,13 +75,11 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
             rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
         }
 
-        if (movementWait > 0)
+        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=0.2f && CanAttack())
         {
-            movementWait -= 0.1f;
-        }
-        else
-        {
-            movementWait = 0;
+            //I want the hitbox to be thrown out closer to when the attack is actually going on. This is the easiest work around to syncing the animation with the hitbox
+            Attack();
+
         }
 
             
@@ -103,7 +103,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     }
     public void lookAround()
     {
-        
+        //A Ray basically compares the the mouse position on the screen to a plane in the world.
+
         Ray ray = mainCam.ScreenPointToRay(mousePos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, ground))
@@ -123,6 +124,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
         movedirection = context.ReadValue<Vector2>();
 
+        //For animation
         if (context.performed)
         {
             walking = true;
@@ -142,7 +144,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         
         if (context.performed) 
         {
-            if (CanAttack() || Actionable())
+            if (IsGrounded()&&(CanAttack()) || Actionable())
             {
                 animator.SetTrigger("Attack");
                 lookAround();
@@ -157,22 +159,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
                 {
                     rb.AddForce(transform.forward * 2, ForceMode.Impulse);
                 }
-
-
-
-
-
-                Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
-                foreach (Collider enemyCollider in HitEnemys)
-                {
-                    IDamageable obj = enemyCollider.GetComponent<IDamageable>();
-                    if (obj != null)
-                    {
-                        obj.TakeDamage(10);
-                        comboCounter++;
-                        if (animatorStreak) animatorStreak.SetTrigger("Combo");
-                    }
-                }
+                
             }
 
         }
@@ -180,6 +167,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        //Simply checks if u are grounded and can do anything.
         if (IsGrounded() && Actionable())
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, rb.linearVelocity.z);
@@ -188,6 +176,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        //Just to get the value of the mouse position on screen
         if (context.performed)
         {
             mousePos = context.ReadValue<Vector2>();
@@ -195,30 +184,51 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         
     }
 
-    public void OnDodge(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            
-        }
 
+
+    public void Attack()
+    {
+        //Makes a list of all Enemy GameObjects that collides with a overlapsphere.
+        //It then itterates throuh all the enemys to damage em. This uses the IDamageble interface to make it easier to manage.
+        Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
+
+        foreach (Collider enemyCollider in HitEnemys)
+        {
+            IDamageable obj = enemyCollider.GetComponent<IDamageable>();
+            if (obj != null)
+            {
+                hitSpark.Clear();
+                rb.linearVelocity = Vector3.zero;
+                Debug.Log("Hit");
+                obj.TakeDamage(1);
+                comboCounter++;
+                if (animatorStreak) animatorStreak.SetTrigger("Combo");
+                hitSpark.Play();
+            }
+        }
     }
     bool IsGrounded()
     {
+        //Just checks if the player is grounded.
             return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GroundedDistance);        
     }
 
     bool Actionable()
     {
+        //Checks the animator to se if the player i a idle state
         return animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle");
     }
 
     bool CanAttack()
     {
-        return animator.GetCurrentAnimatorStateInfo(0).IsTag("CanAttack");
+        //Checks the animator to se if the player i a attacking state
+        return animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
     }
     public void Camera()
     {
+        //This was orginally a standalone code but it is easier to keep track off when its a part of the player script.
+        //Becouse of the fixed camera, i did not need to make it flexible.
+        //It just zooms in when the player walks past a position. The camera also follows the players Y cordinate.
         if (transform.position.y > 4f)
         {
             changeY = transform.position.y;
@@ -229,7 +239,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         }
 
 
-
+        //I also added smothing to the movment.
         changeZ = Mathf.Max(transform.position.z - 10f, -10f);
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, new Vector3(transform.position.x, changeY, changeZ), Time.deltaTime * 1f);
     }
