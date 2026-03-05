@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     [SerializeField] float gravityScale;
     [SerializeField] float GroundedDistance;
     [SerializeField] LayerMask ground;
+    [SerializeField] float maxhp;
+    
 
     [Header("Attack Variables")]
     [SerializeField] Transform attackPoint;
@@ -26,12 +28,16 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     [SerializeField] GameObject streakCheck;
     [Header("Regulare ol´ cam")]
     [SerializeField] Camera mainCam;
+    [Header("Healthbar in HUD animator")]
+    [SerializeField] Animator hpbar;
 
     [Header("Debug / Read Only")]
+    public float currentHp;
     public Vector2 movedirection;
     public Vector2 mousePos;
     public int comboCounter = 0;
     public bool walking=false;
+    public float movementWait=0;
     
 
 
@@ -42,6 +48,9 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     private Rigidbody rb;
     private Animator animator;
 
+    //Camera
+    private float changeY;
+    private float changeZ;
 
     void Awake()
     {
@@ -50,15 +59,29 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         pInput = GetComponent<PlayerInput>();
         animatorStreak = streakCheck.GetComponent<Animator>();
         textStreak = streakCheck.GetComponent<TextMeshProUGUI>();
+        currentHp = maxhp;
     }
 
     void Update()
     {
         //Locomotion
         lookAround();
-        rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
-        
-        
+
+        if (movementWait == 0)
+        {
+            rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
+        }
+
+        if (movementWait > 0)
+        {
+            movementWait -= 0.1f;
+        }
+        else
+        {
+            movementWait = 0;
+        }
+
+            
         
         
         //HUD
@@ -66,8 +89,10 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         //Animator
         animator.SetBool("Walk", walking);
         animator.SetBool("OnGround", IsGrounded());
-
-
+        //Healthbar
+        if (hpbar) hpbar.SetFloat("Hp", 1f-(currentHp/ maxhp));
+        //Camera
+        Camera();
     }
 
     private void FixedUpdate()
@@ -116,9 +141,26 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         
         if (animatorStreak && context.performed) 
         {
-            animator.SetTrigger("Attack");
+           
+            
+                animator.SetTrigger("Attack");
+
+            if (!IsGrounded())
+            {
+                movementWait = 3;
+                rb.linearVelocity = new Vector3(0, 20, 0);
 
 
+            }
+            else
+            {
+
+
+
+
+            }
+
+            
             Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
             foreach (Collider enemyCollider in HitEnemys)
             {
@@ -151,15 +193,37 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         
     }
 
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            movementWait = 2;
+            animator.SetTrigger("Dodge");
+            rb.linearVelocity = new Vector3(movedirection.x * 8, 2, movedirection.y * 8);
+        }
+
+    }
     bool IsGrounded()
     {
-        if (rb.linearVelocity.y == 0)
+            return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GroundedDistance);        
+    }
+
+    public void Camera()
+    {
+        if (transform.position.y > 4f)
         {
-            return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GroundedDistance);
+            changeY = transform.position.y;
         }
         else
         {
-            return false;
+            changeY = 4f;
         }
+
+
+
+        changeZ = Mathf.Max(transform.position.z - 10f, -10f);
+        mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, new Vector3(transform.position.x, changeY, changeZ), Time.deltaTime * 1f);
     }
+
+
 }
