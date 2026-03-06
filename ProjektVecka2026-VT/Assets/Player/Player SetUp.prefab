@@ -231,8 +231,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8af4117b5f2768d4786806addae292ea, type: 2}
-  m_sharedMaterial: {fileID: 294370689377364895, guid: 8af4117b5f2768d4786806addae292ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
+  m_sharedMaterial: {fileID: -7345727038429232590, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -241,12 +241,12 @@ MonoBehaviour:
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 1
-  m_colorMode: 2
+  m_colorMode: 0
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 1, g: 0, b: 0, a: 1}
+    topRight: {r: 1, g: 0, b: 0, a: 1}
+    bottomLeft: {r: 1, g: 0, b: 0, a: 1}
+    bottomRight: {r: 1, g: 0, b: 0, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -256,13 +256,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 3
+  m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -1335,7 +1335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5597314802042743917, guid: 368784b12ec2e354bbe2a9c0c4cbacd3, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5597314802042743917, guid: 368784b12ec2e354bbe2a9c0c4cbacd3, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_ActionId
