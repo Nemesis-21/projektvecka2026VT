@@ -36,6 +36,7 @@ public class Follower : MonoBehaviour
         if (!bec.knocked) // Kolla ifall man e knocked eller itne
         {
             agent.enabled = true;
+            
             bec.anim.SetBool("Running", true);
             rb.linearVelocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
@@ -47,6 +48,7 @@ public class Follower : MonoBehaviour
             agent.enabled = false;
             //rb.useGravity = true;
             time = 0;
+            
             bec.anim.SetBool("Running", false);
         }
 
