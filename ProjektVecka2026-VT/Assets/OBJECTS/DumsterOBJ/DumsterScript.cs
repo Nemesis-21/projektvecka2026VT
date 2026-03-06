@@ -8,7 +8,7 @@ public class DumsterScript : MonoBehaviour, IDamageable
     {
         rb = GetComponent<Rigidbody>();
     }
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         rb.linearVelocity = new Vector3(0, 2, 0);
     }

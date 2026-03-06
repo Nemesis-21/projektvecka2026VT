@@ -244,5 +244,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
         mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, new Vector3(transform.position.x, changeY, changeZ), Time.deltaTime * 1f);
     }
 
-
+    public void TakeDamage(float damageAmount)
+    {
+        currentHp -= damageAmount;
+    }
 }
