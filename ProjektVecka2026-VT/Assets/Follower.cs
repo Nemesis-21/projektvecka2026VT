@@ -12,6 +12,7 @@ public class Follower : MonoBehaviour
     public GameObject destination; //Ref till det objektet vi vill att Enemyn ska förfölja
     NavMeshAgent agent; //Ref till vår NavMeshAgent komponent
     Rigidbody rb;
+    public BaseEnemyClass bec;
 
     float time = 0;
 
@@ -21,22 +22,32 @@ public class Follower : MonoBehaviour
 
         destination = GameObject.FindWithTag("Player");
 
+        
+
         rb = GetComponent<Rigidbody>();
     }
     void Update()
     {
 
-        if (!gameObject.GetComponent<BaseEnemyClass>().knocked) // Kolla ifall man e knocked eller itne
+        if (!bec.activate) return;
+
+        
+
+        if (!bec.knocked) // Kolla ifall man e knocked eller itne
         {
             agent.enabled = true;
-            rb.useGravity = false; // super viktig att disabla gravity för att annars blir risken att fiended blir stuck 100 gånger större jag vet inte varför det blir så fuck you unity navigation more like unity naviGAY
+            bec.anim.SetBool("Running", true);
+            rb.linearVelocity = new Vector3(0, 0, 0);
+            rb.angularVelocity = new Vector3(0, 0, 0);
+            //rb.useGravity = false; // super viktig att disabla gravity för att annars blir risken att fiended blir stuck 100 gånger större jag vet inte varför det blir så fuck you unity navigation more like unity naviGAY
             agent.SetDestination(destination.transform.position); //R�r dig emot destination
         }
         else
         {
             agent.enabled = false;
-            rb.useGravity = true;
+            //rb.useGravity = true;
             time = 0;
+            bec.anim.SetBool("Running", false);
         }
 
         

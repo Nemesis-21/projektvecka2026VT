@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public class Dwarf : BaseEnemyClass
+public class Knight : BaseEnemyClass
 {
     private Follower followerScript;
     private Vector3 startPos; // VIKTIG FÖR ANIMATOR
-
+    
 
 
     public override void Start()
@@ -14,13 +13,13 @@ public class Dwarf : BaseEnemyClass
         base.Start();
         followerScript = gameObject.GetComponent<Follower>();
         startPos = gameObject.transform.position;
-
+        
     }
 
     public override void Update()
     {
         base.Update();
 
-
+        
     }
 }
