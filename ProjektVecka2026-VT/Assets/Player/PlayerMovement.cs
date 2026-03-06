@@ -266,6 +266,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     public void TakeDamage(float damageAmount)
     {
+        animator.SetTrigger("GetHit");
         currentHp -= damageAmount;
     }
 }
