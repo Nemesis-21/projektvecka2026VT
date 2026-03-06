@@ -66,47 +66,55 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     void Update()
     {
-
-
-        if (Actionable())
+        
+        if (currentHp > 0)
         {
-            //Locomotion
-            lookAround();
-            rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=0.2f && CanAttack())
-        {
-            //I want the hitbox to be thrown out closer to when the attack is actually going on. This is the easiest work around to syncing the animation with the hitbox
-            Attack();
-
-        }
-
-
-
-
-        //HUD
-        if (textStreak)
-        {
-            if (comboCounter>0)
+            if (Actionable())
             {
-                textStreak.gameObject.SetActive(true);
-                textStreak.text = "X" + Mathf.Floor(comboCounter);
-                comboCounter -= 0.2f;
+                //Locomotion
+                lookAround();
+                rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
             }
-            else
+            else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f && CanAttack())
             {
-                comboCounter = 0;
-                textStreak.gameObject.SetActive(false);
+                //I want the hitbox to be thrown out closer to when the attack is actually going on. This is the easiest work around to syncing the animation with the hitbox
+                Attack();
+
             }
-            
+
+
+
+
+            //HUD
+            if (textStreak)
+            {
+                if (comboCounter > 0)
+                {
+                    textStreak.gameObject.SetActive(true);
+                    textStreak.text = "X" + Mathf.Floor(comboCounter);
+                    comboCounter -= 0.2f;
+                }
+                else
+                {
+                    comboCounter = 0;
+                    textStreak.gameObject.SetActive(false);
+                }
+
+            }
+            //Animator
+            animator.SetBool("Walk", walking);
+            animator.SetBool("OnGround", IsGrounded());
+            //Healthbar
+            if (hpbar) hpbar.SetFloat("Hp", 1f - (currentHp / maxhp));
+            //Camera
+            Camera();
         }
-        //Animator
-        animator.SetBool("Walk", walking);
-        animator.SetBool("OnGround", IsGrounded());
-        //Healthbar
-        if (hpbar) hpbar.SetFloat("Hp", 1f-(currentHp/ maxhp));
-        //Camera
-        Camera();
+        else
+        {
+            rb.linearVelocity = Vector3.zero;
+            if (!GotHit()) animator.SetTrigger("Knockdown");
+            mainCam.transform.SetPositionAndRotation(new Vector3(transform.position.x, 15, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
+        }
     }
 
     private void FixedUpdate()
@@ -267,6 +275,8 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     public void TakeDamage(float damageAmount)
     {
         animator.SetTrigger("GetHit");
+        
         currentHp -= damageAmount;
+        
     }
 }
