@@ -68,7 +68,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         print("ajjj" + gameObject.name);
         health -= damageAmount;
 
-        Knockback(6, 5);
+        StartCoroutine(Knockback(1.5f, 3));
 
         if (health <= 0) StartCoroutine(Die()); // jag vet inte jag tror han dog?
     }
@@ -76,10 +76,14 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     public virtual IEnumerator Die() // oh no, our table... its broken!
     {
         knocked = true;
+        anim.SetBool("Fallen", true);
+        StartCoroutine(Knockback(14, 7));
 
         yield return new WaitForSeconds(7);
 
         Destroy(gameObject);
+
+        
 
         yield return null;
     }
