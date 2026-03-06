@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     public float currentHp;
     public Vector2 movedirection;
     public Vector2 mousePos;
-    public int comboCounter = 0;
+    public float comboCounter = 0;
     public bool walking=false;
     public float movementWait=0;
     
@@ -74,19 +74,32 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
             lookAround();
             rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
         }
-
-        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=0.2f && CanAttack())
+        else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=0.2f && CanAttack())
         {
             //I want the hitbox to be thrown out closer to when the attack is actually going on. This is the easiest work around to syncing the animation with the hitbox
             Attack();
 
         }
 
-            
-        
-        
+
+
+
         //HUD
-        textStreak.text = "X" + comboCounter;
+        if (textStreak)
+        {
+            if (comboCounter>0)
+            {
+                textStreak.gameObject.SetActive(true);
+                textStreak.text = "X" + Mathf.Floor(comboCounter);
+                comboCounter -= 0.2f;
+            }
+            else
+            {
+                comboCounter = 0;
+                textStreak.gameObject.SetActive(false);
+            }
+            
+        }
         //Animator
         animator.SetBool("Walk", walking);
         animator.SetBool("OnGround", IsGrounded());
@@ -140,7 +153,7 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        
+        //very rigid system but it gets the job done. 
         
         if (context.performed) 
         {
@@ -153,10 +166,12 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
 
                 if (!IsGrounded())
                 {
+                    //Send up for ground slam
                     rb.linearVelocity = new Vector3(0, 20, 0);
                 }
                 else
                 {
+                    //Send em forward to make the combo string more satisfying.
                     rb.AddForce(transform.forward * 2, ForceMode.Impulse);
                 }
                 
@@ -223,6 +238,11 @@ public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions,
     {
         //Checks the animator to se if the player i a attacking state
         return animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
+    }
+
+    bool GotHit()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsTag("Hit");
     }
     public void Camera()
     {
