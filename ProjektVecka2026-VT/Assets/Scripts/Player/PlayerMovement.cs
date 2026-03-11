@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     {
         Vector2 readValue= context.ReadValue<Vector2>();
         movedirection = new Vector3(readValue.x, 0, readValue.y).normalized;
-        animator.SetBool("Walk", context.performed);
+        animator.SetBool("Walking", context.performed);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
