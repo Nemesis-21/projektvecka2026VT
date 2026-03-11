@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     [SerializeField] public float jumpHeight;
     [SerializeField] public float gravityScale;
     [SerializeField] public float maxhp;
-    
 
     [Header("Attack Variables")]
     [SerializeField] Transform attackPoint;
@@ -27,6 +26,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     [HideInInspector] public int score = 0;
     [HideInInspector] public float comboTimer = 0;
     [HideInInspector] public int comboCounter = 0;
+
 
     private Vector3 movedirection;
     //other compomponents that u get with Awake()
@@ -111,6 +111,8 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     public void CameraMovement()
     {
         //I also added smothing to the movment.
+
+        
         float targetZ = Mathf.Max(transform.position.z - 10f, -10f);
         Vector3 CameraTargetPos = new Vector3(Mathf.Max(transform.position.x, 0f), transform.position.y + 5f, targetZ);
         m_MainCamera.transform.position = Vector3.Lerp(m_MainCamera.transform.position, CameraTargetPos, Time.deltaTime * 1f);
@@ -171,6 +173,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     public void TakeDamage(float damageAmount)
     {
         animator.SetTrigger("GetHit");
+        
         currentHp -= damageAmount;
 
     }

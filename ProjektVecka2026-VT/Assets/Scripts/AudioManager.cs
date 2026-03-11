@@ -14,7 +14,6 @@ public class AudioManager : MonoBehaviour
     //Becouse of the small scope we can get away with an audio bank system that can be switched out//
     //Never do this in a bigger scope//
     public AudioClip[] sfxBankSlot;
-
     void Start()
     {
         if (musicSource)

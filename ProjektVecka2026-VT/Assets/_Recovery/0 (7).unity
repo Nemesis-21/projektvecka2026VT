@@ -951,8 +951,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SCORE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
+  m_sharedMaterial: {fileID: -3659177372617899939, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1259,8 +1259,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
+  m_sharedMaterial: {fileID: -3659177372617899939, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1871,6 +1871,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6902017173359511659}
+  - component: {fileID: 6902017173359511660}
   m_Layer: 0
   m_Name: GameSetUp
   m_TagString: Untagged
@@ -1947,8 +1948,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: STAGE 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
-  m_sharedMaterial: {fileID: -7345727038429232590, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2039,8 +2040,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CRUSH EM !!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
-  m_sharedMaterial: {fileID: -7345727038429232590, guid: e35c5b1f3ad7d4e469233c97f80dec31, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2128,6 +2129,18 @@ Transform:
   - {fileID: 2125001820243239833}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6902017173359511660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5731793190831173558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7cc5b6ad58942458fdfbf5ae147109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &7342548915103764704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2431,8 +2444,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
+  m_sharedMaterial: {fileID: -3659177372617899939, guid: 86950860dcdb34f4aafa097e1264a837, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2522,7 +2535,7 @@ MonoBehaviour:
   enemylayer:
     serializedVersion: 2
     m_Bits: 64
-  currentHp: 0
+  currentHp: 10
   score: 0
   comboTimer: 0
   comboCounter: 0
@@ -2791,8 +2804,8 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.45
-  m_Pitch: 1
+  m_Volume: 0.2
+  m_Pitch: 1.2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -2939,10 +2952,11 @@ MonoBehaviour:
   musicSource: {fileID: 0}
   background: {fileID: 0}
   sfxBankSlot:
-  - {fileID: 8300000, guid: 282c9656108fd4446aa6233aef626353, type: 3}
-  - {fileID: 8300000, guid: 27718b514344bca49ae1e849ecbc1463, type: 3}
-  - {fileID: 8300000, guid: c380573b947ec024dbbabf2e9409956e, type: 3}
-  - {fileID: 8300000, guid: 2087f3b395620844899a69b05877f12a, type: 3}
+  - {fileID: 8300000, guid: aea897c70c8670545b426375737f3fcb, type: 3}
+  - {fileID: 8300000, guid: 5957185f9fd04ea4fa03dd216b10474e, type: 3}
+  - {fileID: 8300000, guid: bda0d546aabcb2c4a8e93fd4cd61d2ba, type: 3}
+  - {fileID: 8300000, guid: 696969c99460e9342b33866ad2b8e955, type: 3}
+  - {fileID: 8300000, guid: b54ed59fa3e6f034ab00e09465d854b2, type: 3}
 --- !u!1 &8892289902369324631
 GameObject:
   m_ObjectHideFlags: 0
@@ -2990,6 +3004,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7350224654377347356}
   - component: {fileID: 8424860316529911380}
+  - component: {fileID: 8979045629305933598}
+  - component: {fileID: 8979045629305933599}
   m_Layer: 0
   m_Name: CharchterAudio
   m_TagString: Untagged
@@ -2997,6 +3013,54 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!169 &8979045629305933598
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8979045629305933597}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.22727273
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!164 &8979045629305933599
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8979045629305933597}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: 0
+  m_DecayTime: 8.39
+  m_DecayHFRatio: 1.39
+  m_ReflectionsLevel: -115
+  m_ReverbLevel: 985
+  m_ReverbDelay: 0.03
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 24
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
