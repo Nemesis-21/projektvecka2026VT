@@ -4,18 +4,6 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-<<<<<<< Updated upstream
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-=======
-    path: Assets/Resources/Scenes/TitleScreen.unity
-    guid: a301696f999e8bb4185c20b18f581c46
-  - enabled: 1
-    path: Assets/Resources/Scenes/NicklasScene.unity
-    guid: 4b74ccf6cd33fe346a8376bd7d32a00a
->>>>>>> Stashed changes
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Scenes: []
+  m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

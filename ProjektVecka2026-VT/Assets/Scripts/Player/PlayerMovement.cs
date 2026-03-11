@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Animator))]
 
-public class PlayerMovement : MonoBehaviour, InputSystem_Actions.IPlayerActions, IDamageable
+public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamageable
 {
     [Header("Movement Variables")]
     [SerializeField] public float moveSpeed;

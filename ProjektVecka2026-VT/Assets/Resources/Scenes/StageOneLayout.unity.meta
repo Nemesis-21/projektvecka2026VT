@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:ProjektVecka2026-VT/Assets/Resources/Scenes/StageOneLayout.unity.meta
 guid: e3640b0897200924eb28fc500bd4bb2b
 DefaultImporter:
+========
+guid: e7ca559fe7382544395d4405e55f3e93
+PrefabImporter:
+>>>>>>>> Stashed changes:ProjektVecka2026-VT/Assets/Resources/Enviorment/Buildings/Building B/BuildingBPrefab.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
