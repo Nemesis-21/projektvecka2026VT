@@ -172,10 +172,11 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
 
     public void TakeDamage(float damageAmount)
     {
-        animator.SetTrigger("GetHit");
-        
-        currentHp -= damageAmount;
-
+        if (!GotHit())
+        {
+            animator.SetTrigger("GetHit");
+            currentHp -= damageAmount;
+        }
     }
     bool GotHit()
     {
