@@ -12,10 +12,12 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     [HideInInspector] public bool knocked;
     [SerializeField] private Vector3 hitboxSize;
     [SerializeField] private float forwardOffset;
+    [SerializeField] float damage;
     
     public bool activate;
+    [HideInInspector] public bool dead;
 
-    private GameObject player;
+    [HideInInspector] public GameObject player;
     
     
     public Rigidbody rb;
@@ -33,9 +35,13 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
 
     public virtual void Update()
     {
+        if (dead) return;
+        
         if (Vector3.Distance(transform.position, player.transform.position) < 3)
         {
-            anim.SetTrigger("Attacking");
+            anim.SetBool("Attacking", true);
+
+            
         }
 
         if (Vector3.Distance(transform.position, player.transform.position) < 25)
@@ -44,7 +50,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         }
     }
 
-    public void Attack(float damage) // attack genom att skapa en hitbox What really????
+    public void Attack() // attack genom att skapa en hitbox What really????
     {
         Collider[] hitTargets = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y, transform.position.z + forwardOffset), hitboxSize, transform.rotation,maskToAttack);
         print("attack");
@@ -56,7 +62,15 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
 
             obj.TakeDamage(damage);
 
-            anim.ResetTrigger("Attacking");
+        }
+    }
+
+    public void distanceCheck() // if player is not close stop attacking for FUCKS SAKE
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) > 3)
+        {
+            anim.SetBool("Attacking", false);
+
 
         }
     }
@@ -68,12 +82,19 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
 
     
 
-    public void TakeDamage(float damageAmount)
+    public virtual void TakeDamage(float damageAmount)
     {
         print("ajjj" + gameObject.name);
         health -= damageAmount;
 
-        StartCoroutine(Knockback(1.5f, 3));
+        anim.SetBool("Attacking", false);
+        anim.SetBool("WalkFront", false);
+        anim.SetBool("WalkBack", false);
+        anim.SetBool("WalkLeft", false);
+        anim.SetBool("WalkRight", false);
+        anim.SetBool("Running", false);
+
+        if (!knocked) StartCoroutine(Knockback(15, 3));
 
         if (health <= 0) StartCoroutine(Die()); // jag vet inte jag tror han dog?
     }
@@ -82,7 +103,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     {
         knocked = true;
         anim.SetBool("Fallen", true);
-        StartCoroutine(Knockback(14, 7));
+        StartCoroutine(Knockback(30, 30));
 
         yield return new WaitForSeconds(7);
 
@@ -110,7 +131,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         yield return null;
     }
 
-    public void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y, transform.position.z + forwardOffset), hitboxSize);
     }

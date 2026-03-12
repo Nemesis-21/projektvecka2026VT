@@ -10,9 +10,10 @@ using UnityEngine.AI; //Ref till Unitys AI funktioner
 public class Follower : MonoBehaviour 
 {
     public GameObject destination; //Ref till det objektet vi vill att Enemyn ska förfölja
-    NavMeshAgent agent; //Ref till vår NavMeshAgent komponent
+    public NavMeshAgent agent; //Ref till vår NavMeshAgent komponent
     Rigidbody rb;
     public BaseEnemyClass bec;
+    
 
     float time = 0;
 
@@ -22,7 +23,7 @@ public class Follower : MonoBehaviour
 
         destination = GameObject.FindWithTag("Player");
 
-        
+        bec = GetComponent<BaseEnemyClass>();
 
         rb = GetComponent<Rigidbody>();
     }
@@ -30,14 +31,27 @@ public class Follower : MonoBehaviour
     {
 
         if (!bec.activate) return;
+        if (bec.dead) return;
 
         
 
         if (!bec.knocked) // Kolla ifall man e knocked eller itne
         {
+            if (bec.anim.GetBool("Attacking")) return;
+            
             agent.enabled = true;
             
-            bec.anim.SetBool("Running", true);
+            if (gameObject.GetComponent<Knight>() != null)
+            {
+                if (!gameObject.GetComponent<Knight>().passive) bec.anim.SetBool("Running", true);
+                else bec.anim.SetBool("Running", false);
+            }
+            else
+            {
+                bec.anim.SetBool("Running", true);
+            }
+
+            
             rb.linearVelocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
             //rb.useGravity = false; // super viktig att disabla gravity för att annars blir risken att fiended blir stuck 100 gånger större jag vet inte varför det blir så fuck you unity navigation more like unity naviGAY
@@ -48,8 +62,16 @@ public class Follower : MonoBehaviour
             agent.enabled = false;
             //rb.useGravity = true;
             time = 0;
-            
-            bec.anim.SetBool("Running", false);
+
+            if (gameObject.GetComponent<Knight>() != null)
+            {
+                if (gameObject.GetComponent<Knight>().passive) bec.anim.SetBool("Running", false);
+                else bec.anim.SetBool("Running", true);
+            }
+            else
+            {
+                bec.anim.SetBool("Running", false);
+            }
         }
 
         
