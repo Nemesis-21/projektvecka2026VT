@@ -14,7 +14,7 @@ public class Knight : BaseEnemyClass // Målet med skript
 {
     private Follower followerScript;
     [HideInInspector] public static bool attacking;
-    [SerializeField] Vector3 overlapBox;
+    
     public bool passive;
     private float timer = 0;
     private float passiveTimer = 0;
