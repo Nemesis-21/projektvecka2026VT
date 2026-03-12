@@ -10,6 +10,11 @@ public class UIContinue : UIFindPlayer
 
     public void ReturnToTitleScreen()
     {
+        Invoke("NewScene", 0.5f);
+    }
+
+    public void NewScene()
+    {
         SceneManager.LoadSceneAsync(0);
     }
 }
