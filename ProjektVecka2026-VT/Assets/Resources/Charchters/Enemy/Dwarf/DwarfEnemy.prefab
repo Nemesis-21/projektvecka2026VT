@@ -201,7 +201,7 @@ MonoBehaviour:
   hitboxSize: {x: 2, y: 2, z: 2}
   forwardOffset: 1.5
   damage: 1
-  activate: 1
+  activate: 0
   dead: 0
   player: {fileID: 0}
   rb: {fileID: 7160945081556823360}

@@ -29,7 +29,7 @@ public class Follower : MonoBehaviour
     }
     void Update()
     {
-
+        
         if (!bec.activate) return;
         if (bec.dead) return;
 

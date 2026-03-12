@@ -105,7 +105,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         anim.SetBool("Fallen", true);
         StartCoroutine(Knockback(30, 30));
 
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(3.5f);
 
         Destroy(gameObject);
 
