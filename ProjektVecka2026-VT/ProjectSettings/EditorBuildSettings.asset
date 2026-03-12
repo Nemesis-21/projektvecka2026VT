@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/TitleScreen.unity
     guid: a301696f999e8bb4185c20b18f581c46
+  - enabled: 1
+    path: Assets/Resources/Scenes/StageOneLayout.unity
+    guid: e3640b0897200924eb28fc500bd4bb2b
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

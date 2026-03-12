@@ -275,85 +275,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d57bf71b1a8404dac6c204cdb6bc85, type: 3}
---- !u!1 &1141263403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1141263406}
-  - component: {fileID: 1141263405}
-  - component: {fileID: 1141263404}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1141263404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1141263403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_PointAction: {fileID: 209366314}
-  m_MoveAction: {fileID: 2069392595}
-  m_SubmitAction: {fileID: 2004198034}
-  m_CancelAction: {fileID: 1935187536}
-  m_LeftClickAction: {fileID: 432919305}
-  m_MiddleClickAction: {fileID: 1353421134}
-  m_RightClickAction: {fileID: 7379746}
-  m_ScrollWheelAction: {fileID: 1203091793}
-  m_TrackedDevicePositionAction: {fileID: 2136395573}
-  m_TrackedDeviceOrientationAction: {fileID: 1950652899}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
---- !u!114 &1141263405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1141263403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1141263406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1141263403}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1203091793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,6 +736,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSetUp
       objectReference: {fileID: 0}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_MoveAction
+      value: 
+      objectReference: {fileID: 2069392595}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_PointAction
+      value: 
+      objectReference: {fileID: 209366314}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_CancelAction
+      value: 
+      objectReference: {fileID: 1935187536}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_SubmitAction
+      value: 
+      objectReference: {fileID: 2004198034}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_LeftClickAction
+      value: 
+      objectReference: {fileID: 432919305}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_RightClickAction
+      value: 
+      objectReference: {fileID: 7379746}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_MiddleClickAction
+      value: 
+      objectReference: {fileID: 1353421134}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_ScrollWheelAction
+      value: 
+      objectReference: {fileID: 1203091793}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_TrackedDevicePositionAction
+      value: 
+      objectReference: {fileID: 2136395573}
+    - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_TrackedDeviceOrientationAction
+      value: 
+      objectReference: {fileID: 1950652899}
     - target: {fileID: 6666854826349968485, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -865,7 +826,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1648952426}
-  - {fileID: 1141263406}
   - {fileID: 1566959529}
   - {fileID: 567100876}
   - {fileID: 1985695468591617727}

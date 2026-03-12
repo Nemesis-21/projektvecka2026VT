@@ -13432,6 +13432,13 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
+    functionName: Attack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: ChangeVelocityX
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -13439,10 +13446,10 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: Attack
+    functionName: ChangeVelocityY
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 4
     intParameter: 0
     messageOptions: 0
   - time: 0.033333335
