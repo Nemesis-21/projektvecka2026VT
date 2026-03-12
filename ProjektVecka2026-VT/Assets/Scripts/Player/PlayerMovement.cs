@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
             if (!GotHit()) animator.SetTrigger("Knockdown");
             m_MainCamera.transform.Rotate(new Vector3(0, 1, 0), 0.08f);
             m_MainCamera.transform.SetPositionAndRotation(new Vector3(transform.position.x, 6, transform.position.z), Quaternion.Euler(90f, m_MainCamera.transform.rotation.eulerAngles.y, 0f));
-            //Death();
+            
         }
 
         
@@ -113,9 +113,9 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
         //I also added smothing to the movment.
 
         
-        float targetZ = Mathf.Max(transform.position.z - 10f, -10f);
-        Vector3 CameraTargetPos = new Vector3(Mathf.Max(transform.position.x, 0f), transform.position.y + 5f, targetZ);
-        m_MainCamera.transform.position = Vector3.Lerp(m_MainCamera.transform.position, CameraTargetPos, Time.deltaTime * 1f);
+        float targetZ = Mathf.Max(transform.position.z - 15f, -15f);
+        Vector3 CameraTargetPos = new Vector3(Mathf.Max(transform.position.x, 0f), transform.position.y + 7f, targetZ);
+        m_MainCamera.transform.position = Vector3.Lerp(m_MainCamera.transform.position, CameraTargetPos, Time.deltaTime * 3f);
     }
 
 
@@ -187,10 +187,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
         //Checks the animator to se if the player i a idle state
         return animator.GetCurrentAnimatorStateInfo(0).IsTag("Actionable");
     }
-    public void Death()
-    {
-        SceneManager.LoadSceneAsync(1);
-    }
+
     //COMBO//////////////////////////////////////////////
     public void GetCombo()
     {

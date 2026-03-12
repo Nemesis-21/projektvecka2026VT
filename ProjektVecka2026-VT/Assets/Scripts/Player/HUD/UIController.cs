@@ -5,6 +5,7 @@ public class UIController : UIFindPlayer
 {
 
     RectTransform rectTransform;
+    [SerializeField] public GameObject continueOverlay;
 
     public override void OtherAwake()
     {
@@ -18,6 +19,7 @@ public class UIController : UIFindPlayer
             if (player.currentHp<=0)
             {
                 rectTransform.position = new Vector3(300f, 0f, 0f);
+                continueOverlay.SetActive(true);
             }
         }
     }
