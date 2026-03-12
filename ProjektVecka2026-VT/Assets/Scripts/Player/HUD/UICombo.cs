@@ -14,7 +14,6 @@ public class UICombo : UIFindPlayer
     {
         if (player)
         {
-
             if (oldVal < player.comboCounter) animator.SetTrigger("Added");
             text.text = player.comboCounter + "X";
             oldVal = player.comboCounter;

@@ -3,6 +3,7 @@
 //I would prefare too add a better way to sync animations with the players action but it think that my "cheat" solutions work good, but would not scale well for a bigger game.
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInput))]
@@ -26,8 +27,6 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     [HideInInspector] public int score = 0;
     [HideInInspector] public float comboTimer = 0;
     [HideInInspector] public int comboCounter = 0;
-
-
     private Vector3 movedirection;
     //other compomponents that u get with Awake()
     private Rigidbody rb;
@@ -73,7 +72,8 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
         {
             rb.linearVelocity = Vector3.zero;
             if (!GotHit()) animator.SetTrigger("Knockdown");
-            m_MainCamera.transform.SetPositionAndRotation(new Vector3(transform.position.x, 15, transform.position.z), Quaternion.Euler(90f, 0f, 0f));
+            m_MainCamera.transform.Rotate(new Vector3(0, 1, 0), 0.08f);
+            m_MainCamera.transform.SetPositionAndRotation(new Vector3(transform.position.x, 6, transform.position.z), Quaternion.Euler(90f, m_MainCamera.transform.rotation.eulerAngles.y, 0f));
             //Death();
         }
 

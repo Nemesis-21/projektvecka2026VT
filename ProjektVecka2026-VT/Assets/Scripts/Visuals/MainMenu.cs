@@ -2,10 +2,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    public void PlayGame(int newScene)
     {
-        SceneManager.LoadSceneAsync(1);
-
-
+        if (SceneManager.sceneCount >= newScene) 
+        { 
+            SceneManager.LoadSceneAsync(newScene); 
+        }
+        else
+        {
+            print("could not load scene" + newScene);
+        }
     }
+
+    public void QuitGame() 
+    {
+        print("Quit game");
+        Application.Quit(); 
+    }
+
 }
