@@ -13,7 +13,13 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     [SerializeField] private Vector3 hitboxSize;
     [SerializeField] private float forwardOffset;
     [SerializeField] float damage;
+    [SerializeField] float attackDistance;
+
+    [SerializeField] AudioSource hitSound;
+    [SerializeField] AudioSource hurtSound;
+    [SerializeField] AudioSource deathSound;
     
+
     public bool activate;
     [HideInInspector] public bool dead;
 
@@ -37,7 +43,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     {
         if (dead) return;
         
-        if (Vector3.Distance(transform.position, player.transform.position) < 3)
+        if (Vector3.Distance(transform.position, player.transform.position) < attackDistance)
         {
             anim.SetBool("Attacking", true);
 
@@ -59,7 +65,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
             print("träffar " + collider.gameObject.name);
             
             IDamageable obj = collider.GetComponent<IDamageable>();
-
+            hitSound.Play();
             obj.TakeDamage(damage);
 
         }
@@ -67,7 +73,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
 
     public void distanceCheck() // if player is not close stop attacking for FUCKS SAKE
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > 3)
+        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
         {
             anim.SetBool("Attacking", false);
 
@@ -94,6 +100,8 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         anim.SetBool("WalkRight", false);
         anim.SetBool("Running", false);
 
+        hurtSound.Play();
+
         if (!knocked) StartCoroutine(Knockback(15, 3));
 
         if (health <= 0) StartCoroutine(Die()); // jag vet inte jag tror han dog?
@@ -103,6 +111,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     {
         knocked = true;
         anim.SetBool("Fallen", true);
+        deathSound.Play();
         StartCoroutine(Knockback(30, 30));
 
         yield return new WaitForSeconds(3.5f);

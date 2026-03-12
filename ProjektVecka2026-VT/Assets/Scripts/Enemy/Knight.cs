@@ -47,7 +47,7 @@ public class Knight : BaseEnemyClass // Målet med skript
         {
             base.Update();
 
-            
+            return;
         }
         
         if (!passive && !knocked)
