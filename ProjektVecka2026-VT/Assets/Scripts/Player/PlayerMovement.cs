@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
                 {
                     //LookAround//
                     Quaternion targetRotation = Quaternion.LookRotation(movedirection, Vector3.up);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 25f);
                 }
 
                 if (transform.position.y < -3) currentHp = 0;//dödar en om man är utanför banan.
