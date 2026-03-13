@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
                     Quaternion targetRotation = Quaternion.LookRotation(movedirection, Vector3.up);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 15f);
                 }
+
+                if (transform.position.y < -3) currentHp = 0;//dödar en om man är utanför banan.
             }
             
             ComboUpdate();
@@ -72,9 +74,11 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
         {
             rb.linearVelocity = Vector3.zero;
             if (!GotHit()) animator.SetTrigger("Knockdown");
-            m_MainCamera.transform.Rotate(new Vector3(0, 1, 0), 0.08f);
-            m_MainCamera.transform.SetPositionAndRotation(new Vector3(transform.position.x, 6, transform.position.z), Quaternion.Euler(90f, m_MainCamera.transform.rotation.eulerAngles.y, 0f));
-            
+            if (transform.position.y>-3)
+            {
+                m_MainCamera.transform.Rotate(new Vector3(0, 1, 0), 0.08f);
+                m_MainCamera.transform.SetPositionAndRotation(new Vector3(transform.position.x, 6 + transform.position.y, transform.position.z), Quaternion.Euler(90f, m_MainCamera.transform.rotation.eulerAngles.y, 0f));
+            }
         }
 
         
@@ -111,8 +115,6 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     public void CameraMovement()
     {
         //I also added smothing to the movment.
-
-        
         float targetZ = Mathf.Max(transform.position.z - 15f, -15f);
         Vector3 CameraTargetPos = new Vector3(Mathf.Max(transform.position.x, 0f), transform.position.y + 7f, targetZ);
         m_MainCamera.transform.position = Vector3.Lerp(m_MainCamera.transform.position, CameraTargetPos, Time.deltaTime * 3f);

@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
     {
         if (sfxBankSlot[slot] != null)
         {
+            sfxSource.pitch = Random.Range(0.8f, 1.2f);//Pitch Shift//
             sfxSource.Stop();
             sfxSource.PlayOneShot(sfxBankSlot[slot]);
         }
