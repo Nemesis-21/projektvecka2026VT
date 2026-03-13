@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEditor.Rendering;
+
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -160,7 +160,7 @@ public class Knight : BaseEnemyClass // Målet med skript
     {
         called = true;
 
-        
+        tauntSound.Play();
         strafeDirection = (Random.value > 0.5f) ? 1 : 2;
 
         

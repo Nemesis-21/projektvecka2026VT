@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class Dwarf : BaseEnemyClass
 {
-    
+    bool taunted;
 
 
 
@@ -20,5 +20,16 @@ public class Dwarf : BaseEnemyClass
         base.Update();
 
 
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+
+        if (taunted) return;
+
+        tauntSound.Play();
+
+        taunted = true; 
     }
 }

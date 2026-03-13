@@ -13,8 +13,8 @@ public class Follower : MonoBehaviour
     public NavMeshAgent agent; //Ref till vår NavMeshAgent komponent
     Rigidbody rb;
     public BaseEnemyClass bec;
-    
 
+    public bool stopFollow = false;
     float time = 0;
 
     void Start()
@@ -55,7 +55,7 @@ public class Follower : MonoBehaviour
             rb.linearVelocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
             //rb.useGravity = false; // super viktig att disabla gravity för att annars blir risken att fiended blir stuck 100 gånger större jag vet inte varför det blir så fuck you unity navigation more like unity naviGAY
-            agent.SetDestination(destination.transform.position); //R�r dig emot destination
+            if (!stopFollow) agent.SetDestination(destination.transform.position); //R�r dig emot destination
         }
         else
         {

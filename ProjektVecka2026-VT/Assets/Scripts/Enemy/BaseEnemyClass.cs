@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.Audio;
 
 public class BaseEnemyClass : MonoBehaviour, IDamageable
 {
@@ -14,10 +15,13 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     [SerializeField] private float forwardOffset;
     [SerializeField] float damage;
     [SerializeField] float attackDistance;
+    [SerializeField] float activateRange;
 
     [SerializeField] AudioSource hitSound;
+    [SerializeField] AudioSource swingSound;
     [SerializeField] AudioSource hurtSound;
     [SerializeField] AudioSource deathSound;
+    [SerializeField] public AudioSource tauntSound;
     
 
     public bool activate;
@@ -50,7 +54,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
             
         }
 
-        if (Vector3.Distance(transform.position, player.transform.position) < 25)
+        if (Vector3.Distance(transform.position, player.transform.position) < activateRange)
         {
             Activate();
         }
@@ -60,6 +64,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
     {
         Collider[] hitTargets = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y, transform.position.z + forwardOffset), hitboxSize, transform.rotation,maskToAttack);
         print("attack");
+        swingSound.Play();
         foreach(Collider collider in hitTargets)
         {
             print("träffar " + collider.gameObject.name);
@@ -81,7 +86,7 @@ public class BaseEnemyClass : MonoBehaviour, IDamageable
         }
     }
 
-    public void Activate()
+    public virtual void Activate()
     {
         activate = true;
     }
