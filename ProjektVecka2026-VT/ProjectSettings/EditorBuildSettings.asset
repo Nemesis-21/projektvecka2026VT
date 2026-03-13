@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/StageOneLayout.unity
     guid: e3640b0897200924eb28fc500bd4bb2b
+  - enabled: 1
+    path: Assets/Resources/Scenes/WinScreen.unity
+    guid: 43f5fc50ca53c3e48bf43c1d12652aa6
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
