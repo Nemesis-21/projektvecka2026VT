@@ -9,13 +9,14 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Animator))]
 
-public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamageable
+public class PlayerMovement : MonoBehaviour, IDamageable
 {
     [Header("Movement Variables")]
     [SerializeField] public float moveSpeed;
     [SerializeField] public float jumpHeight;
     [SerializeField] public float gravityScale;
     [SerializeField] public float maxhp;
+    private Vector3 movedirection;
 
     [Header("Attack Variables")]
     [SerializeField] Transform attackPoint;
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
     [HideInInspector] public int score = 0;
     [HideInInspector] public float comboTimer = 0;
     [HideInInspector] public int comboCounter = 0;
-    private Vector3 movedirection;
+    
     //other compomponents that u get with Awake()
     private Rigidbody rb;
     private Animator animator;
@@ -58,7 +59,7 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
                 {
                     //LookAround//
                     Quaternion targetRotation = Quaternion.LookRotation(movedirection, Vector3.up);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 25f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 60f);
                 }
 
                 if (transform.position.y < -3) currentHp = 0;//dödar en om man är utanför banan.
@@ -91,21 +92,24 @@ public class PlayerMovement : MonoBehaviour, PlayerInput.IPlayerActions, IDamage
 
 
     //INPUT////////////////////////////////////////
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(InputValue value)
     {
-        Vector2 readValue= context.ReadValue<Vector2>();
+        Vector2 readValue= value.Get<Vector2>();
         movedirection = new Vector3(readValue.x, 0, readValue.y).normalized;
-        animator.SetBool("Walking", context.performed);
+
+        animator.SetBool("Walking", false);
+        if (readValue!=Vector2.zero) animator.SetBool("Walking", true);
+
     }
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack(InputValue value)
     {
         //very rigid system but it gets the job done. 
-        if (context.performed) animator.SetTrigger("Attack");
+        if (value.isPressed) animator.SetTrigger("Attack");
 
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    public void OnJump(InputValue value)
     {
         //Simply checks if u are grounded and can do anything.
         if (IsGrounded() && Actionable()) ChangeVelocityY(jumpHeight);
