@@ -303,6 +303,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
+--- !u!1 &1494256423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5861288903415810875, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+  m_PrefabInstance: {fileID: 1985695468591617727}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1494256431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494256423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b003c5e06ebcc9649b9ec6513702c843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+--- !u!114 &1494256432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494256423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a771cb1eb38635d45a5824b7e78d2ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  attackPoint: {fileID: 0}
+  attackRadius: 0
+  enemylayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1566959526
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +770,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSetUp
       objectReference: {fileID: 0}
+    - target: {fileID: 2687466535768316016, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: jumpHeight
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687466535768316016, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: gravityScale
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553143175858383205, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565016038687708190, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5089233925488190298, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
       propertyPath: m_MoveAction
       value: 
@@ -819,7 +869,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5861288903415810875, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1494256432}
+    - targetCorrespondingSourceObject: {fileID: 5861288903415810875, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1494256431}
   m_SourcePrefab: {fileID: 100100000, guid: b4290cb9a486a3a4da16c04dfd2b01fe, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

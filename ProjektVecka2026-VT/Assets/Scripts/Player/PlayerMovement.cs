@@ -18,12 +18,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     [SerializeField] public float maxhp;
     private Vector3 movedirection;
 
-    [Header("Attack Variables")]
-    [SerializeField] Transform attackPoint;
-    [SerializeField] float attackRadius;
-    [SerializeField] LayerMask enemylayer;
-    
-
     public float currentHp;
     [HideInInspector] public int score = 0;
     [HideInInspector] public float comboTimer = 0;
@@ -102,12 +96,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
     }
 
-    public void OnAttack(InputValue value)
-    {
-        //very rigid system but it gets the job done. 
-        if (value.isPressed) animator.SetTrigger("Attack");
-
-    }
+    
 
     public void OnJump(InputValue value)
     {
@@ -157,24 +146,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     //ATTACK/ GET ATTACKED////////////////////////////////////////////
 
 
-    public void Attack()
-    {
-        //Makes a list of all Enemy GameObjects that collides with a overlapsphere.
-        //It then itterates throuh all the enemys to damage em. This uses the IDamageble interface to make it easier to manage.
-        Collider[] HitEnemys = Physics.OverlapSphere(attackPoint.position, attackRadius, enemylayer);
-        foreach (Collider enemyCollider in HitEnemys)
-        {
-            IDamageable obj = enemyCollider.GetComponent<IDamageable>();
-            if (obj != null)
-            {
-
-                rb.linearVelocity = Vector3.zero; ;
-                obj.TakeDamage(1);
-                GetCombo();
-
-            }
-        }
-    }
+   
 
     public void TakeDamage(float damageAmount)
     {
