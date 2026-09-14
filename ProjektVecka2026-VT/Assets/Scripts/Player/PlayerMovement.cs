@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour, IDamageable
     [SerializeField] public float jumpHeight;
     [SerializeField] public float gravityScale;
     [SerializeField] public float maxhp;
-    private Vector3 movedirection;
+    private Vector2 movedirection = InputSystem.actions.FindAction("Move").ReadValue<Vector2>();
 
     public float currentHp;
     [HideInInspector] public int score = 0;
@@ -47,9 +47,12 @@ public class PlayerMovement : MonoBehaviour, IDamageable
             //Locomotion
             if (Actionable())
             {
-                rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.z * moveSpeed);
+                rb.linearVelocity = new Vector3(movedirection.x * moveSpeed, rb.linearVelocity.y, movedirection.y * moveSpeed);
+                
 
-                if (movedirection != Vector3.zero)
+                animator.SetBool("Walking", false);
+                if (movedirection != Vector2.zero) animator.SetBool("Walking", true);
+                if (movedirection != Vector2.zero)
                 {
                     //LookAround//
                     Quaternion targetRotation = Quaternion.LookRotation(movedirection, Vector3.up);
@@ -86,15 +89,6 @@ public class PlayerMovement : MonoBehaviour, IDamageable
 
 
     //INPUT////////////////////////////////////////
-    public void OnMove(InputValue value)
-    {
-        Vector2 readValue= value.Get<Vector2>();
-        movedirection = new Vector3(readValue.x, 0, readValue.y).normalized;
-
-        animator.SetBool("Walking", false);
-        if (readValue!=Vector2.zero) animator.SetBool("Walking", true);
-
-    }
 
     
 
